@@ -31,10 +31,7 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
 
   onInitEditMode() {
     super.onInitEditMode();
-    this.fontSizes = ['20%', '30%','50%','70%','80%','100%', '110%', '120%', '150%', '170%', '200%'];
     this.addEditorTab('Delta Config', 'public/plugins/grafana-delta-panel/editor.html', 5);
-    //this.addEditorTab('Options', 'public/app/plugins/panel/singlestat/editor.html', 3)
-    //this.addEditorTab('Value Mappings', 'public/app/plugins/panel/singlestat/mappings.html', 4);
     this.unitFormats = kbn.getUnitFormats();
   }
 
