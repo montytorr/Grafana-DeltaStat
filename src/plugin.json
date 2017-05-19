@@ -1,0 +1,25 @@
+{
+  "type": "panel",
+  "name": "DeltaStat Plugin",
+  "id": "grafana-delta-panel",
+
+  "info": {
+    "description": "Delta plugin for Maestro",
+    "author": {
+      "name": "Louis VENTRE",
+      "url": "https://twitter.com/Oxydros"
+    },
+    "keywords": ["delta", "singlestat", "panel"],
+    "logos": {
+      "small": "src/img/piechart_logo_small.png",
+      "large": "src/img/piechart_logo_large.png"
+    },
+    "version": "0.1.0",
+    "updated": "2017-05-19"
+  },
+
+  "dependencies": {
+    "grafanaVersion": "4.x.x",
+    "plugins": [ ]
+  }
+}
