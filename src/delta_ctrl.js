@@ -33,7 +33,7 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
 
   onInitEditMode() {
     super.onInitEditMode();
-    this.addEditorTab('Delta Config', 'public/plugins/grafana-delta-panel/editor.html', 5);
+    this.addEditorTab('Delta Config', 'public/plugins/grafana-delta-panel/delta_config.html', 5);
     this.unitFormats = kbn.getUnitFormats();
   }
 
