@@ -22,6 +22,8 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
       targets: [{}],
       cacheTimeout: null,
       dayInterval: 'NOW',
+      hourInterval: 'NOW',
+      minuteInterval: 'NOW',
     };
 
     _.defaults(this.panel, panelDefaults);
@@ -70,14 +72,16 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
       };
 
       const dayI = this.panel.dayInterval === 'NOW' ? moment().date() : this.panel.dayInterval;
+      const hourI = this.panel.hourInterval === 'NOW' ? moment().hour() : this.panel.hourInterval;
+      const minuteI = this.panel.minuteInterval === 'NOW' ? moment().minute() : this.panel.minuteInterval;
 
       let thisMonth = null;
 
-      if (moment().unix() < metricsQuery.range.to.unix()) {
-        thisMonth = moment().date(dayI);
-      } else {
-        thisMonth = moment(metricsQuery.range.to).date(dayI);
-      }
+      // if (moment().unix() < metricsQuery.range.to.unix()) {
+      //   thisMonth = moment().date(dayI).hour(hourI).minute(minuteI);
+      // } else {
+      thisMonth = moment(metricsQuery.range.to).date(dayI).hour(hourI).minute(minuteI);
+      // }
 
       const beginThisMonth = moment(thisMonth).startOf('month');
       const lastMonth = moment(thisMonth).subtract(1, 'month');
