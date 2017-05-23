@@ -33,7 +33,7 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
 
   onInitEditMode() {
     super.onInitEditMode();
-    this.addEditorTab('Delta Config', 'public/plugins/grafana-delta-panel/delta_config.html', 5);
+    this.addEditorTab('Delta Config', 'public/plugins/grafana-delta-panel/delta_config.html', 2);
     this.unitFormats = kbn.getUnitFormats();
   }
 
@@ -75,14 +75,7 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
       const hourI = this.panel.hourInterval === 'NOW' ? moment().hour() : this.panel.hourInterval;
       const minuteI = this.panel.minuteInterval === 'NOW' ? moment().minute() : this.panel.minuteInterval;
 
-      let thisMonth = null;
-
-      // if (moment().unix() < metricsQuery.range.to.unix()) {
-      //   thisMonth = moment().date(dayI).hour(hourI).minute(minuteI);
-      // } else {
-      thisMonth = moment(metricsQuery.range.to).date(dayI).hour(hourI).minute(minuteI);
-      // }
-
+      const thisMonth = moment(metricsQuery.range.to).date(dayI).hour(hourI).minute(minuteI);
       const beginThisMonth = moment(thisMonth).startOf('month');
       const lastMonth = moment(thisMonth).subtract(1, 'month');
       const beginLastMonth = moment(lastMonth).startOf('month');

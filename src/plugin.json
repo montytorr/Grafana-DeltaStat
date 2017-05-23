@@ -10,10 +10,6 @@
       "url": "https://twitter.com/Oxydros"
     },
     "keywords": ["delta", "singlestat", "panel"],
-    "logos": {
-      "small": "src/img/piechart_logo_small.png",
-      "large": "src/img/piechart_logo_large.png"
-    },
     "version": "0.1.0",
     "updated": "2017-05-19"
   },
