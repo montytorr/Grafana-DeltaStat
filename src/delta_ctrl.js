@@ -27,8 +27,12 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
       minuteInterval: 'NOW',
     };
 
-    _.defaults(this.panel, panelDefaults);
+    _.defaultsDeep(this.panel, panelDefaults);
     this.scope = $scope;
+
+    this.events.on('init-edit-mode', this.onInitEditMode.bind(this));
+    // this.events.on('panel-teardown', this.onPanelTeardown.bind(this));
+    this.events.on('panel-initialized', this.render.bind(this));
 
   }
 
@@ -133,6 +137,12 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
     }
 
     return this.events.emit('data-received', result.data);
+  }
+
+  link(scope, elem) {
+    this.events.on('render', () => {
+      console.log('rendering panel');
+    });
   }
 }
 
