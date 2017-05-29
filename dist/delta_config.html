@@ -1,0 +1,32 @@
+<div class="editor-row">
+
+	<div class="section gf-form-group">
+		<h5 class="section-heading">Customisation</h5>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-12">Day interval</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.dayInterval" ng-change="ctrl.refresh()">
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-12">Hour interval</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.hourInterval" ng-change="ctrl.refresh()">
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-12">Minute interval</span>
+			<input type="text" class="gf-form-input max-width-10" ng-model="ctrl.panel.minuteInterval" ng-change="ctrl.refresh()">
+		</div>
+
+		<div class="gf-form">
+			<span class="gf-form-label width-12">Unit</span>
+			<div class="gf-form-dropdown-typeahead width-10"
+				 ng-model="ctrl.panel.format"
+				 dropdown-typeahead="ctrl.unitFormats"
+				 dropdown-typeahead-on-select="ctrl.setUnitFormat($subItem)">
+			</div>
+		</div>
+
+	</div>
+
+</div>
