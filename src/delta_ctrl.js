@@ -13,6 +13,7 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
   constructor($scope, $injector, $rootScope) {
     super($scope, $injector);
     this.$rootScope = $rootScope;
+    console.log('Initializing plugin');
 
     var panelDefaults = {
       links: [],
@@ -100,12 +101,19 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
     this.setTimeQueryEnd();
     this.loading = false;
 
-    if (results[0].data.length <= 0 || results[1].data.length <= 0) {
-      let error = new Error();
-      error.message = 'Not enougth series error';
-      error.data = '0 query entered';
-      throw error;
+    // if (results[0].data.length <= 0 || results[1].data.length <= 0) {
+    //   let error = new Error();
+    //   error.message = 'Not enougth series error';
+    //   error.data = '0 query entered';
+    //   throw error;
+    // }
+
+    if (typeof results[0].data[0] === 'undefined'){
+      result = {data: []};
+      console.log('No result.');
+      return;
     }
+
     results[0].data[0].datapoints[0][0] -= results[1].data[0].datapoints[0][0]
     var result = results[0];
 
