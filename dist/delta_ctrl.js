@@ -102,6 +102,7 @@ System.register(['app/plugins/panel/singlestat/module', 'moment', 'lodash', 'jqu
           var _this = _possibleConstructorReturn(this, (DeltaPluginCtrl.__proto__ || Object.getPrototypeOf(DeltaPluginCtrl)).call(this, $scope, $injector));
 
           _this.$rootScope = $rootScope;
+          console.log('Initializing plugin');
 
           var panelDefaults = {
             links: [],
@@ -115,8 +116,12 @@ System.register(['app/plugins/panel/singlestat/module', 'moment', 'lodash', 'jqu
             minuteInterval: 'NOW'
           };
 
-          _.defaults(_this.panel, panelDefaults);
+          _.defaultsDeep(_this.panel, panelDefaults);
           _this.scope = $scope;
+
+          _this.events.on('init-edit-mode', _this.onInitEditMode.bind(_this));
+          // this.events.on('panel-teardown', this.onPanelTeardown.bind(this));
+          _this.events.on('panel-initialized', _this.render.bind(_this));
 
           return _this;
         }
@@ -199,12 +204,19 @@ System.register(['app/plugins/panel/singlestat/module', 'moment', 'lodash', 'jqu
             this.setTimeQueryEnd();
             this.loading = false;
 
-            if (results[0].data.length <= 0 || results[1].data.length <= 0) {
-              var error = new Error();
-              error.message = 'Not enougth series error';
-              error.data = '0 query entered';
-              throw error;
+            // if (results[0].data.length <= 0 || results[1].data.length <= 0) {
+            //   let error = new Error();
+            //   error.message = 'Not enougth series error';
+            //   error.data = '0 query entered';
+            //   throw error;
+            // }
+
+            if (typeof results[0].data[0] === 'undefined') {
+              result = { data: [] };
+              console.log('No result.');
+              return;
             }
+
             results[0].data[0].datapoints[0][0] -= results[1].data[0].datapoints[0][0];
             var result = results[0];
 
@@ -224,6 +236,13 @@ System.register(['app/plugins/panel/singlestat/module', 'moment', 'lodash', 'jqu
             }
 
             return this.events.emit('data-received', result.data);
+          }
+        }, {
+          key: 'link',
+          value: function link(scope, elem) {
+            this.events.on('render', function () {
+              console.log('rendering panel');
+            });
           }
         }]);
 
