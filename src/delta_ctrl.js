@@ -100,6 +100,12 @@ export class DeltaPluginCtrl extends SingleStatCtrl {
     this.setTimeQueryEnd();
     this.loading = false;
 
+    if (results[0].data.length <= 0 || results[1].data.length <= 0) {
+      let error = new Error();
+      error.message = 'Not enougth series error';
+      error.data = '0 query entered';
+      throw error;
+    }
     results[0].data[0].datapoints[0][0] -= results[1].data[0].datapoints[0][0]
     var result = results[0];
 
