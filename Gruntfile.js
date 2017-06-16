@@ -2,7 +2,7 @@ module.exports = function(grunt) {
 
   require('load-grunt-tasks')(grunt);
 
-  grunt.loadNpmTasks('grunt-execute');
+  // grunt.loadNpmTasks('grunt-execute');
   grunt.loadNpmTasks('grunt-contrib-clean');
 
   grunt.initConfig({
@@ -20,7 +20,7 @@ module.exports = function(grunt) {
         cwd: 'src',
         expand: true,
         src: ['img/*'],
-        dest: 'dist/src/'
+        dest: 'dist'
       },
       pluginDef: {
         expand: true,

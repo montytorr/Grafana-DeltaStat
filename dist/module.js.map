@@ -1,0 +1,1 @@
+{"version":3,"sources":["../src/module.js"],"names":["DeltaPluginCtrl"],"mappings":";;;;;;;;AACQA,qB,eAAAA,e;;;2BAGNA,e","file":"module.js","sourcesContent":["\nimport {DeltaPluginCtrl} from './delta_ctrl';\n\nexport {\n  DeltaPluginCtrl as PanelCtrl\n};\n"]}
