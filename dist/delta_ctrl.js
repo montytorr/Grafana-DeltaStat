@@ -125,7 +125,9 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
               thresholdLabels: false
             },
             tableColumn: '',
-            dayInterval: 'NOW'
+            dayInterval: 'NOW',
+            hourInterval: 'NOW',
+            minuteInterval: 'NOW'
           };
 
           _.defaults(_this.panel, panelDefaults);
@@ -153,6 +155,7 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
             this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
             this.addEditorTab('Options', 'public/app/plugins/panel/singlestat/editor.html', 3);
             this.addEditorTab('Value Mappings', 'public/app/plugins/panel/singlestat/mappings.html', 4);
+            this.addEditorTab('Delta', 'public/plugins/grafana-delta-panel/delta_config.html', 5);
             this.unitFormats = kbn.getUnitFormats();
           }
         }, {
@@ -341,15 +344,10 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
               };
 
               var dayI = _this3.panel.dayInterval === 'NOW' ? moment().date() : _this3.panel.dayInterval;
+              var hourI = _this3.panel.hourInterval === 'NOW' ? moment().hour() : _this3.panel.hourInterval;
+              var minuteI = _this3.panel.minuteInterval === 'NOW' ? moment().minute() : _this3.panel.minuteInterval;
 
-              var thisMonth = null;
-
-              if (moment().unix() < metricsQuery.range.to.unix()) {
-                thisMonth = moment().date(dayI);
-              } else {
-                thisMonth = moment(metricsQuery.range.to).date(dayI);
-              }
-
+              var thisMonth = moment(metricsQuery.range.to).date(dayI).hour(hourI).minute(minuteI);
               var beginThisMonth = moment(thisMonth).startOf('month');
               var lastMonth = moment(thisMonth).subtract(1, 'month');
               var beginLastMonth = moment(lastMonth).startOf('month');
@@ -376,6 +374,19 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
           value: function handleQueryResult(results) {
             this.setTimeQueryEnd();
             this.loading = false;
+
+            if (results[0].data.length <= 0 || results[1].data.length <= 0) {
+              var error = new Error();
+              error.message = 'Not enougth series error';
+              error.data = '0 query entered';
+              throw error;
+            }
+
+            if (typeof results[0].data[0] === 'undefined') {
+              result = { data: [] };
+              console.log('No result.');
+              return;
+            }
 
             results[0].data[0].datapoints[0][0] -= results[1].data[0].datapoints[0][0];
             var result = results[0];

@@ -60,6 +60,8 @@ export class DeltaPluginCtrl extends PanelCtrl {
       },
       tableColumn: '',
       dayInterval: 'NOW',
+      hourInterval: 'NOW',
+      minuteInterval: 'NOW',
     };
 
     _.defaults(this.panel, panelDefaults);
@@ -84,6 +86,7 @@ export class DeltaPluginCtrl extends PanelCtrl {
     this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
     this.addEditorTab('Options', 'public/app/plugins/panel/singlestat/editor.html', 3);
     this.addEditorTab('Value Mappings', 'public/app/plugins/panel/singlestat/mappings.html', 4);
+    this.addEditorTab('Delta', 'public/plugins/grafana-delta-panel/delta_config.html', 5);
     this.unitFormats = kbn.getUnitFormats();
   }
 
@@ -263,15 +266,10 @@ export class DeltaPluginCtrl extends PanelCtrl {
       };
 
       const dayI = this.panel.dayInterval === 'NOW' ? moment().date() : this.panel.dayInterval;
+      const hourI = this.panel.hourInterval === 'NOW' ? moment().hour() : this.panel.hourInterval;
+      const minuteI = this.panel.minuteInterval === 'NOW' ? moment().minute() : this.panel.minuteInterval;
 
-      let thisMonth = null;
-
-      if (moment().unix() < metricsQuery.range.to.unix()) {
-        thisMonth = moment().date(dayI);
-      } else {
-        thisMonth = moment(metricsQuery.range.to).date(dayI);
-      }
-
+      const thisMonth = moment(metricsQuery.range.to).date(dayI).hour(hourI).minute(minuteI);
       const beginThisMonth = moment(thisMonth).startOf('month');
       const lastMonth = moment(thisMonth).subtract(1, 'month');
       const beginLastMonth = moment(lastMonth).startOf('month');
@@ -295,6 +293,19 @@ export class DeltaPluginCtrl extends PanelCtrl {
   handleQueryResult(results) {
     this.setTimeQueryEnd();
     this.loading = false;
+  
+    if (results[0].data.length <= 0 || results[1].data.length <= 0) {
+      let error = new Error();
+      error.message = 'Not enougth series error';
+      error.data = '0 query entered';
+      throw error;
+    }
+
+    if (typeof results[0].data[0] === 'undefined'){
+      result = {data: []};
+      console.log('No result.');
+      return;
+    }
 
     results[0].data[0].datapoints[0][0] -= results[1].data[0].datapoints[0][0]
     var result = results[0];
