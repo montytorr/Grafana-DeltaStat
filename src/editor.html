@@ -3,6 +3,7 @@
 	<div class="query-editor-rows gf-form-group">
 		<h5 class="section-heading">Query informations</h5>
 		<h4 class="section-heading">Don't touch 'FORMAT AS' and 'ALIAS BY'. Empty the 'GROUP BY'.</h4>
+		<h4 class="section-heading">The query must return only one value. Use aggregation functions. It will then use the information in the Delta config to process a delta.</h4>
 
 	  <div ng-repeat="target in ctrl.panel.targets" ng-class="{'gf-form-disabled': target.hide}">
 	    <rebuild-on-change property="ctrl.panel.datasource || target.datasource" show-null="true">

@@ -375,6 +375,7 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
             this.setTimeQueryEnd();
             this.loading = false;
 
+            console.log(results);
             if (results[0].data.length <= 0 || results[1].data.length <= 0) {
               var error = new Error();
               error.message = 'Not enougth series error';

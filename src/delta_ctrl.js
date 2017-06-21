@@ -293,7 +293,8 @@ export class DeltaPluginCtrl extends PanelCtrl {
   handleQueryResult(results) {
     this.setTimeQueryEnd();
     this.loading = false;
-  
+
+    console.log(results);
     if (results[0].data.length <= 0 || results[1].data.length <= 0) {
       let error = new Error();
       error.message = 'Not enougth series error';
