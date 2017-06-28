@@ -1,9 +1,9 @@
 'use strict';
 
-System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot', 'jquery.flot.gauge', 'app/core/utils/kbn', 'app/core/time_series2'], function (_export, _context) {
+System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot', 'jquery.flot.gauge', 'app/core/utils/kbn', 'app/core/time_series2', 'app/features/panel/metrics_tab'], function (_export, _context) {
   "use strict";
 
-  var PanelCtrl, moment, _, $, kbn, TimeSeries, _createClass, DeltaPluginCtrl;
+  var PanelCtrl, moment, _, $, kbn, TimeSeries, metricsTabDirective, _createClass, DeltaPluginCtrl;
 
   function _classCallCheck(instance, Constructor) {
     if (!(instance instanceof Constructor)) {
@@ -57,6 +57,8 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
       kbn = _appCoreUtilsKbn.default;
     }, function (_appCoreTime_series) {
       TimeSeries = _appCoreTime_series.default;
+    }, function (_appFeaturesPanelMetrics_tab) {
+      metricsTabDirective = _appFeaturesPanelMetrics_tab.metricsTabDirective;
     }],
     execute: function () {
       _createClass = function () {
@@ -152,7 +154,8 @@ System.register(['app/plugins/sdk', 'moment', 'lodash', 'jquery', 'jquery.flot',
           key: 'onInitEditMode',
           value: function onInitEditMode() {
             this.fontSizes = ['20%', '30%', '50%', '70%', '80%', '100%', '110%', '120%', '150%', '170%', '200%'];
-            this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
+            this.addEditorTab('Metrics', metricsTabDirective);
+            //this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
             this.addEditorTab('Options', 'public/app/plugins/panel/singlestat/editor.html', 3);
             this.addEditorTab('Value Mappings', 'public/app/plugins/panel/singlestat/mappings.html', 4);
             this.addEditorTab('Delta', 'public/plugins/grafana-delta-panel/delta_config.html', 5);

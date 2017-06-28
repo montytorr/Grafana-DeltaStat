@@ -7,6 +7,7 @@ import 'jquery.flot';
 import 'jquery.flot.gauge';
 import kbn from 'app/core/utils/kbn';
 import TimeSeries from 'app/core/time_series2';
+import {metricsTabDirective} from 'app/features/panel/metrics_tab';
 
 export class DeltaPluginCtrl extends PanelCtrl {
 
@@ -83,7 +84,8 @@ export class DeltaPluginCtrl extends PanelCtrl {
 
   onInitEditMode() {
     this.fontSizes = ['20%', '30%','50%','70%','80%','100%', '110%', '120%', '150%', '170%', '200%'];
-    this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
+    this.addEditorTab('Metrics', metricsTabDirective);
+    //this.addEditorTab('Metrics', 'public/plugins/grafana-delta-panel/editor.html', 2);
     this.addEditorTab('Options', 'public/app/plugins/panel/singlestat/editor.html', 3);
     this.addEditorTab('Value Mappings', 'public/app/plugins/panel/singlestat/mappings.html', 4);
     this.addEditorTab('Delta', 'public/plugins/grafana-delta-panel/delta_config.html', 5);
